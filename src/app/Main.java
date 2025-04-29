@@ -92,15 +92,15 @@ class GenerareJSON {
 }
 
 /**
- * Clasa AdaptorJsonToXml implementează pattern-ul Adapter, care permite
- * integrarea sistemelor cu interfețe incompatibile.
+ * Clasa AdaptorJsonToXml implementeaza pattern-ul Adapter, care permite
+ * integrarea sistemelor cu interfete incompatibile.
  * 
- * Utilitatea în aplicații reale:
- * 1. Permite integrarea cu biblioteci/sisteme terțe fără a modifica codul existent
- * 2. Facilitează tranziția între formate de date diferite (JSON, XML, etc.)
- * 3. Promovează principiul Open/Closed: extinde funcționalitatea fără a modifica codul
- * 4. Simplifică migrarea între sisteme legacy și moderne
- * 5. Reduce costurile de refactorizare când se lucrează cu API-uri externe
+ * Utilitatea in aplicatii reale:
+ * 1. Permite integrarea cu biblioteci/sisteme terte fara a modifica codul existent
+ * 2. Faciliteaza tranzitia intre formate de date diferite (JSON, XML, etc.)
+ * 3. Promoveaza principiul Open/Closed: extinde functionalitatea fara a modifica codul
+ * 4. Simplifica migrarea intre sisteme legacy si moderne
+ * 5. Reduce costurile de refactorizare cand se lucreaza cu API-uri externe
  */
 class AdaptorJsonToXml {
     private final SistemExistent sistem;
@@ -259,7 +259,7 @@ public class Main {
         } catch (RezervareException e) {
             System.err.println("Eroare rezervare: " + e);
         } catch (Exception e) {
-            System.err.println("Eroare generală neașteptată: " + e);
+            System.err.println("Eroare generala neasteptata: " + e);
         } finally {
             System.out.println("Raport final rezervare.");
         }
@@ -271,13 +271,11 @@ public class Main {
         adaptor.afiseaza(gen.genereazaJSON());
 
         System.out.println("=== Organisme Vii ===");
-        // Demonstrarea polimorfismului: deși referințele sunt de tip OrganismViu,
-        // metodele apelate sunt cele din clasele concrete (Urs, Delfin)
         List<OrganismViu> lista = List.of(new Urs(), new Delfin());
-        System.out.println("Exemplu de polimorfism: aceeași metodă, comportament diferit în funcție de tipul concret:");
+        System.out.println("Exemplu de polimorfism: aceeasi metoda, comportament diferit in functie de tipul concret:");
         lista.forEach(o -> { 
-            o.respira();  // Metoda finală din Animal
-            o.seHraneste(); // Metoda implementată diferit în fiecare clasă concretă
+            o.respira();
+            o.seHraneste();
         });
 
         System.out.println("=== Dispozitive ===");
