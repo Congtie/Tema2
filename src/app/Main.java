@@ -270,11 +270,27 @@ public class Main {
         Set<Produs> set = new HashSet<>();
         Produs p1 = new Produs("A1", "Produs1", 10.0);
         Produs p2 = new Produs("A1", "AltNume", 12.0);
-        set.add(p1); set.add(p2);
+        Produs p3 = new Produs("B2", "Produs2", 15.0);
+        set.add(p1); set.add(p2); set.add(p3);
+        System.out.println("Set continut (doar unul din produsele A1 este stocat):");
         set.forEach(System.out::println);
+        
         Map<Produs, Integer> magazin = new HashMap<>();
         magazin.put(p1, 5);
+        magazin.put(p3, 10);
+        
+        System.out.println("\nForEach direct pe Map:");
         magazin.forEach((prod, stoc) -> System.out.println(prod + " -> stoc: " + stoc));
+        
+        System.out.println("\nParcurgere cu entrySet():");
+        for (Map.Entry<Produs, Integer> entry : magazin.entrySet()) {
+            System.out.println("Produs: " + entry.getKey() + ", Stoc: " + entry.getValue());
+        }
+        
+        System.out.println("\nParcurgere separata cu keySet() si get():");
+        for (Produs p : magazin.keySet()) {
+            System.out.println("Cheie: " + p + ", Valoare: " + magazin.get(p));
+        }
 
         System.out.println("=== Conturi Utilizatori ===");
         List<ContUtilizator> conturi = List.of(
