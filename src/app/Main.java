@@ -91,6 +91,17 @@ class GenerareJSON {
     }
 }
 
+/**
+ * Clasa AdaptorJsonToXml implementează pattern-ul Adapter, care permite
+ * integrarea sistemelor cu interfețe incompatibile.
+ * 
+ * Utilitatea în aplicații reale:
+ * 1. Permite integrarea cu biblioteci/sisteme terțe fără a modifica codul existent
+ * 2. Facilitează tranziția între formate de date diferite (JSON, XML, etc.)
+ * 3. Promovează principiul Open/Closed: extinde funcționalitatea fără a modifica codul
+ * 4. Simplifică migrarea între sisteme legacy și moderne
+ * 5. Reduce costurile de refactorizare când se lucrează cu API-uri externe
+ */
 class AdaptorJsonToXml {
     private final SistemExistent sistem;
     public AdaptorJsonToXml(SistemExistent sistem) {
@@ -247,6 +258,8 @@ public class Main {
             System.err.println("Loc indisponibil!");
         } catch (RezervareException e) {
             System.err.println("Eroare rezervare: " + e);
+        } catch (Exception e) {
+            System.err.println("Eroare generală neașteptată: " + e);
         } finally {
             System.out.println("Raport final rezervare.");
         }
@@ -258,8 +271,14 @@ public class Main {
         adaptor.afiseaza(gen.genereazaJSON());
 
         System.out.println("=== Organisme Vii ===");
+        // Demonstrarea polimorfismului: deși referințele sunt de tip OrganismViu,
+        // metodele apelate sunt cele din clasele concrete (Urs, Delfin)
         List<OrganismViu> lista = List.of(new Urs(), new Delfin());
-        lista.forEach(o -> { o.respira(); o.seHraneste(); });
+        System.out.println("Exemplu de polimorfism: aceeași metodă, comportament diferit în funcție de tipul concret:");
+        lista.forEach(o -> { 
+            o.respira();  // Metoda finală din Animal
+            o.seHraneste(); // Metoda implementată diferit în fiecare clasă concretă
+        });
 
         System.out.println("=== Dispozitive ===");
         Dispozitiv.descriereGenerala();
@@ -298,6 +317,7 @@ public class Main {
                 new ContUtilizator(NivelAcces.USER),
                 new ContUtilizator(NivelAcces.GUEST)
         );
+        System.out.println("Conturi cu nivel de acces superior lui USER:");
         conturi.stream()
                 .filter(c -> c.getNivel().ordinal() < NivelAcces.USER.ordinal())
                 .forEach(System.out::println);
