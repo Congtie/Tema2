@@ -302,7 +302,7 @@ public class Main {
         List<ContUtilizator> conturi = List.of(
             new ContUtilizator(NivelAcces.ADMIN),
             new ContUtilizator(NivelAcces.USER),
-            new ContUtilizutor(NivelAcces.GUEST)
+            new ContUtilizator(NivelAcces.GUEST)
         );
         conturi.stream()
                .filter(c -> c.getNivel().ordinal() < NivelAcces.USER.ordinal())
