@@ -39,7 +39,7 @@ final class Card implements MetodaPlata {
 
 final class Cash implements MetodaPlata {
     public void process() {
-        System.out.println("Tranzactie cash: instanta.");
+        System.out.println("Tranzactie cash: instant.");
     }
 }
 
@@ -91,25 +91,15 @@ class GenerareJSON {
     }
 }
 
-/**
- * Clasa AdaptorJsonToXml implementeaza pattern-ul Adapter, care permite
- * integrarea sistemelor cu interfete incompatibile.
- * 
- * Utilitatea in aplicatii reale:
- * 1. Permite integrarea cu biblioteci/sisteme terte fara a modifica codul existent
- * 2. Faciliteaza tranzitia intre formate de date diferite (JSON, XML, etc.)
- * 3. Promoveaza principiul Open/Closed: extinde functionalitatea fara a modifica codul
- * 4. Simplifica migrarea intre sisteme legacy si moderne
- * 5. Reduce costurile de refactorizare cand se lucreaza cu API-uri externe
- */
 class AdaptorJsonToXml {
     private final SistemExistent sistem;
     public AdaptorJsonToXml(SistemExistent sistem) {
         this.sistem = sistem;
     }
     public void afiseaza(String json) {
-        // Simpla transformare JSON->XML
-        String xml = "<root><mesaj>" + json.replaceAll(".*\"mesaj\": \"(.*)\".*", "$1") + "</mesaj></root>";
+        String xml = "<root><mesaj>" +
+            json.replaceAll(".*\"mesaj\": \"(.*)\".*", "$1") +
+            "</mesaj></root>";
         sistem.afiseazaXML(xml);
     }
 }
@@ -135,13 +125,14 @@ abstract class Mamifer extends Animal {
 class Urs extends Mamifer {
     @Override public void seHraneste() {
         System.out.println("Ursul se hraneste cu miere.");
+        arePar();
     }
-    public void grizzly() { /* comportament special */ }
 }
 
 class Delfin extends Mamifer {
     @Override public void seHraneste() {
         System.out.println("Delfinul se hraneste cu pesti.");
+        arePar();
     }
 }
 
@@ -272,8 +263,7 @@ public class Main {
 
         System.out.println("=== Organisme Vii ===");
         List<OrganismViu> lista = List.of(new Urs(), new Delfin());
-        System.out.println("Exemplu de polimorfism: aceeasi metoda, comportament diferit in functie de tipul concret:");
-        lista.forEach(o -> { 
+        lista.forEach(o -> {
             o.respira();
             o.seHraneste();
         });
@@ -283,41 +273,39 @@ public class Main {
         Telefon t = new Telefon();
         t.porneste(); t.status(); t.conecteazaLaInternet(); t.opreste();
 
+        Smartwatch sw = new Smartwatch();
+        sw.porneste(); sw.status(); sw.conecteazaLaInternet(); sw.opreste();
+
+        Televizor tv = new Televizor();
+        tv.porneste(); tv.status(); tv.conecteaza(); tv.opreste();
+
         System.out.println("=== Colectii Produse ===");
         Set<Produs> set = new HashSet<>();
         Produs p1 = new Produs("A1", "Produs1", 10.0);
         Produs p2 = new Produs("A1", "AltNume", 12.0);
         Produs p3 = new Produs("B2", "Produs2", 15.0);
         set.add(p1); set.add(p2); set.add(p3);
-        System.out.println("Set continut (doar unul din produsele A1 este stocat):");
         set.forEach(System.out::println);
-        
+
         Map<Produs, Integer> magazin = new HashMap<>();
         magazin.put(p1, 5);
         magazin.put(p3, 10);
-        
-        System.out.println("\nForEach direct pe Map:");
         magazin.forEach((prod, stoc) -> System.out.println(prod + " -> stoc: " + stoc));
-        
-        System.out.println("\nParcurgere cu entrySet():");
         for (Map.Entry<Produs, Integer> entry : magazin.entrySet()) {
             System.out.println("Produs: " + entry.getKey() + ", Stoc: " + entry.getValue());
         }
-        
-        System.out.println("\nParcurgere separata cu keySet() si get():");
         for (Produs p : magazin.keySet()) {
             System.out.println("Cheie: " + p + ", Valoare: " + magazin.get(p));
         }
 
         System.out.println("=== Conturi Utilizatori ===");
         List<ContUtilizator> conturi = List.of(
-                new ContUtilizator(NivelAcces.ADMIN),
-                new ContUtilizator(NivelAcces.USER),
-                new ContUtilizator(NivelAcces.GUEST)
+            new ContUtilizator(NivelAcces.ADMIN),
+            new ContUtilizator(NivelAcces.USER),
+            new ContUtilizutor(NivelAcces.GUEST)
         );
-        System.out.println("Conturi cu nivel de acces superior lui USER:");
         conturi.stream()
-                .filter(c -> c.getNivel().ordinal() < NivelAcces.USER.ordinal())
-                .forEach(System.out::println);
+               .filter(c -> c.getNivel().ordinal() < NivelAcces.USER.ordinal())
+               .forEach(System.out::println);
     }
 }
